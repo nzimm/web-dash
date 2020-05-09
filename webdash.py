@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from flask import *
+from flask_socketio import SocketIO
 import util
 
 app = Flask(__name__, template_folder="./views/")
+socketio = SocketIO(app)
 
 # store links for the dashboard
 # could look at redis for persistence
@@ -19,9 +21,13 @@ def index():
 def update_link():
     if not "url" in request.form:
         return Response("error", 400)
-    context["display_url"] = request.form["url"]
-    return jsonify("updated display to {}".format(request.form["url"]))
+
+    try:
+        context["display_url"] = util.youtube_link(request.form["url"])
+        return jsonify("updated display to {}".format(request.form["url"]))
+    except ValueError as err:
+        return jsonify("{}".format(err))
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app, debug=True)
