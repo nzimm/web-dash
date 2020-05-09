@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 from flask import *
 from flask_socketio import SocketIO
+from dashboard import dashboard
 import util
 
 app = Flask(__name__, template_folder="./views/")
 socketio = SocketIO(app)
+dash = dashboard.DashBoard("first Dashboard", "Testing first dashboard")
 
 # store links for the dashboard
 # could look at redis for persistence
@@ -28,6 +30,10 @@ def update_link():
     except ValueError as err:
         return jsonify("{}".format(err))
 
+@app.route("/addModule", methods=["POST"])
+def add_Module():
+    dash.addModule(request)
+    return jsonify("Added Module")
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
