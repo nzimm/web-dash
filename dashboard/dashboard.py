@@ -24,5 +24,15 @@ class DashBoard:
          # create new class
          newMod = cls("test", "test description", request)
 
+         #mod specific parsing
+         newMod.parseRequest(request)
+
+         #mod specific parsing
+         newMod.initMod()
+
          #append to dashboard
          self.Modules.append(newMod)
+
+
+    def render(self):
+        pass

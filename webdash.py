@@ -39,6 +39,7 @@ def update_link():
 @app.route("/addModule", methods=["POST"])
 def add_Module():
     dash.addModule(request)
+    print(dash.Modules[0].url)
     return jsonify("Added Module")
 
 if __name__ == "__main__":
