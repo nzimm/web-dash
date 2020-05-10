@@ -19,9 +19,6 @@ class Youtube(modules.BaseModule):
     def __init__(self, pName, pDescription, pRequests):
         modules.BaseModule.__init__(self, pName, pDescription, pRequests)
         self.url = ''
-        #self.name = pName
-        #self.description = pDescription
-        #self.parseRequest(pRequests)
 
     def parseRequest(self, request):
         if not "url" in request.form:
@@ -30,3 +27,7 @@ class Youtube(modules.BaseModule):
             self.url = youtube_link(request.form["url"])
         except:
             raise error("test")
+
+    def render(self):
+        #TODO: create iframe view and generate it here
+        pass
